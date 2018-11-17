@@ -23,34 +23,46 @@ viewsRef.once('value', function(snapshot) {
 });
 // keep view counter updated (ongoing)
 viewsRef.on('value', function(snapshot) {
-$('#views').text(`${snapshot.val().views} views`);
+$('#views').html(`<h3>${snapshot.val().views} views toal</h3>`);
 });
 
-// fancy google log in
-var provider = new firebase.auth.GoogleAuthProvider();
+$('#login-google').on("click", function(){
+    // fancy google log in
+    var provider = new firebase.auth.GoogleAuthProvider();
+    
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        console.log('token', token);
+        // The signed-in user info.
+        var user = result.user;
+        console.log('user', user);
+        // ...
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        console.log('error.code', errorCode);
+        var errorMessage = error.message;
+        console.log('error.message', errorMessage);
+        // The email of the user's account used.
+        var email = error.email;
+        console.log('error.email', email);
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        console.log('error.credential', credential);
+        // ...
+    });
+});
 
-firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    console.log('token', token);
-    // The signed-in user info.
-    var user = result.user;
-    console.log('user', user);
-    // ...
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    console.log('error.code', errorCode);
-    var errorMessage = error.message;
-    console.log('error.message', errorMessage);
-    // The email of the user's account used.
-    var email = error.email;
-    console.log('error.email', email);
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    console.log('error.credential', credential);
-    // ...
-  });
+$('#logout').on("click", function(){
+    firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log('signed out');
+      }).catch(function(error) {
+        // An error happened.
+        console.log('thar be an error signin out');
+      });
+});
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -62,6 +74,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
+      console.log(providerData);
       // ...
       $('#login-info').html(`
         display name: ${displayName}
@@ -70,7 +83,6 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
         <br>photo: <img src="${photoURL}">
         <br>is anonymous: ${isAnonymous}
         <br>user id: ${uid}
-        <br>provider data: ${providerData}
       `);
     } else {
       // User is signed out.
