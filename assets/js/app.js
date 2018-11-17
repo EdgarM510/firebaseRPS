@@ -29,15 +29,17 @@ $('#views').html(`<h3>${snapshot.val().views} views toal</h3>`);
 $('#login-google').on("click", function(){
     // fancy google log in
     var provider = new firebase.auth.GoogleAuthProvider();
-    
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        console.log('token', token);
+    // firebase.auth().signInWithRedirect(provider);
+    console.log(firebase.auth().getRedirectResult());
+    firebase.auth().getRedirectResult().then(function(result) {
+        if (result.credential) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // ...
+        }
         // The signed-in user info.
         var user = result.user;
-        console.log('user', user);
-        // ...
+        console.log(user);
     }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -57,8 +59,8 @@ $('#login-google').on("click", function(){
 $('#logout').on("click", function(){
     firebase.auth().signOut().then(function() {
         // Sign-out successful.
-        console.log('signed out');
-      }).catch(function(error) {
+        $('#login-info').html(`Not signed in or nothing`);
+    }).catch(function(error) {
         // An error happened.
         console.log('thar be an error signin out');
       });
@@ -86,6 +88,7 @@ $('#logout').on("click", function(){
       `);
     } else {
       // User is signed out.
+      $('#login-info').html(`Not signed in or nothing`);
       // ...
     }
   });
