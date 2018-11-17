@@ -5,19 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Foroboso RPS</title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <h1>welcome to the show</h1>
-    <span id="login-buttons">Sign in with:
-        <br><button id="login-google">Google</button>
-        <br><button id="logout">Sign out</button>
+    <span id="login-buttons">
+        <div>Sign in with:
+            <br><button id="login-google">Google</button>
+            <br><button id="logout">Sign out</button>
+        </div>
     </span>
-    <div id="login-info"></div>
-    <div id="views"></div>
+    <span>
+        <div id="login-info"></div>
+        <div id="user-edit">
+            <input id="name-edit" type="text" value="Display Name">
+            <input id="photo-edit" type="text" value="Avatar URL">
+            <button id="submit-edit" onclick="submitEdit()">Submit</button>
+        </div>
+        <div id="views"></div>
+    </span>
     
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/session.js"></script>
 </body>
 </html>

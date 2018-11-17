@@ -1,0 +1,10 @@
+#login-info {
+    border: 3px double maroon;
+    border-radius: 6px;
+}
+
+#user-edit {
+    display: none;
+    border: 3px double deeppink;
+    border-radius: 6px;
+}
