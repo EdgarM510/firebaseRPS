@@ -51,3 +51,29 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     console.log('error.credential', credential);
     // ...
   });
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var displayName = user.displayName;
+      var email = user.email;
+      var emailVerified = user.emailVerified;
+      var photoURL = user.photoURL;
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      var providerData = user.providerData;
+      // ...
+      $('#login-info').html(`
+        display name: ${displayName}
+        <br>email: ${email}
+        <br>email verified: ${emailVerified}
+        <br>photo: <img src="${photoURL}">
+        <br>is anonymous: ${isAnonymous}
+        <br>user id: ${uid}
+        <br>provider data: ${providerData}
+      `);
+    } else {
+      // User is signed out.
+      // ...
+    }
+  });
