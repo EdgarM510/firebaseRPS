@@ -79,10 +79,11 @@ $('#logout').on("click", function(){
       console.log(providerData);
       // ...
       $('#login-info').html(`
-        display name: ${displayName}
+        <img src="${photoURL}">
+        <br>display name: ${displayName}
         <br>email: ${email}
         <br>email verified: ${emailVerified}
-        <br>photo: <img src="${photoURL}">
+        <br>photo: ${photoURL}
         <br>is anonymous: ${isAnonymous}
         <br>user id: ${uid}
         <br><button onclick="openEdit()">Change Name/Avatar</button>
@@ -95,7 +96,8 @@ $('#logout').on("click", function(){
   });
 
   function openEdit() {
-    $('#user-edit').style.display = "block";
+    $('#user-edit').show();
+    $('#photo-edit').val(firebase.auth().currentUser.photoURL);
   }
 
   function submitEdit() {
@@ -107,9 +109,11 @@ $('#logout').on("click", function(){
       photoURL: photoURLVal
     }).then(function() {
       // Update successful.
-      $('#user-edit').style.display = "none";
+      $('#user-edit').hide();
+      location.reload();
     }).catch(function(error) {
       // An error happened.
       console.log("thar be an error updating user deets");
     });
   }
+
