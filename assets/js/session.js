@@ -81,12 +81,14 @@ $('#logout').on("click", function(){
       $('#login-info').html(`
         <img src="${photoURL}">
         <br>display name: ${displayName}
+        <br><button onclick="openEdit()">Change Name/Avatar</button>
+        `);
+      $('#user-edit').append(`
         <br>email: ${email}
         <br>email verified: ${emailVerified}
         <br>photo: ${photoURL}
         <br>is anonymous: ${isAnonymous}
         <br>user id: ${uid}
-        <br><button onclick="openEdit()">Change Name/Avatar</button>
       `);
     } else {
       // User is signed out.
@@ -96,7 +98,7 @@ $('#logout').on("click", function(){
   });
 
   function openEdit() {
-    $('#user-edit').show();
+    $('#user-edit').toggle();
     $('#photo-edit').val(firebase.auth().currentUser.photoURL);
   }
 
